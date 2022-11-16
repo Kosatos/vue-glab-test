@@ -1,26 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <ul class="app-list">
+      <li v-for="list in $store.state.lists" :key="list.title">
+        <app-list :list="list"></app-list>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapGetters } from 'vuex'
+import AppList from './components/AppList.vue'
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
+    AppList,
+  },
 }
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss" scoped>
+.container {
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 50px 15px;
+}
+.app-list {
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+
+  li:not(:last-child) {
+    margin-bottom: 10px;
+  }
 }
 </style>
