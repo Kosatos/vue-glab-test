@@ -7,7 +7,8 @@
         @click="openList"
       ></div>
       <label class="list__checkbox">
-        <input type="checkbox" v-model="isChecked" />
+        <span v-if="isIndeterminate"></span>
+        <input type="checkbox" v-model="isChecked" ref="myCheckbox" />
         {{ list.title }}
       </label>
     </div>
@@ -49,6 +50,12 @@ export default {
     listIdx() {
       return this.$store.state.lists.findIndex(
         (list) => list.title === this.list.title
+      )
+    },
+    isIndeterminate() {
+      return (
+        this.list.categories.some((item) => item.checked) &&
+        !this.list.categories.every((item) => item.checked)
       )
     },
   },
@@ -103,6 +110,17 @@ export default {
       width: 20px;
       height: 20px;
       margin-right: 10px;
+      border-width: 5px;
+    }
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      background-color: #000;
     }
   }
 
