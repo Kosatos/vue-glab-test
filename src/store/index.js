@@ -177,12 +177,18 @@ export default createStore({
     ],
   },
   mutations: {
-    toggleItemChecked(state, { listIdx, itemIdx, checked }) {
-      const item = state.lists[listIdx].categories[itemIdx]
-      const list = state.lists[listIdx]
+    toggleItemChecked(state, { path, checked }) {
+      const item = path.reduce((item, idx) => {
+        return item.categories ? item.categories[idx] : item[idx]
+      }, state.lists)
+
+      const parentList = path.slice(path.length - 1).reduce((item, idx) => {
+        return item.categories ? item.categories[idx] : item[idx]
+      }, state.lists)
+
       item.checked = checked
 
-      list.checked = list.categories.every(({ checked }) => checked)
+      parentList.checked = list.categories.every(({ checked }) => checked)
     },
 
     toggleListChecked(state, { checked, list }) {

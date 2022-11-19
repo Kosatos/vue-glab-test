@@ -11,13 +11,14 @@ export default {
   props: {
     items: Array,
     item: Object,
-    listIdx: Number,
+    path: Array,
   },
   data() {
     return {
       newChecked: this.item.checked,
     }
   },
+  mounted() {},
   computed: {
     isChecked: {
       get() {
@@ -31,12 +32,14 @@ export default {
     itemIdx() {
       return this.items.findIndex((item) => item.title === this.item.title)
     },
+    newPath() {
+      return [...this.path, this.itemIdx]
+    },
   },
   methods: {
     onChange() {
       this.$store.commit('toggleItemChecked', {
-        listIdx: this.listIdx,
-        itemIdx: this.itemIdx,
+        path: this.newPath,
         checked: this.newChecked,
       })
     },

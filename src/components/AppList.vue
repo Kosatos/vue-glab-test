@@ -18,8 +18,8 @@
         v-for="item in list.categories"
         :key="item.title"
         :items="list.categories"
-        :listIdx="listIdx"
         :item="item"
+        :path="[listIdx]"
       ></app-list-item>
     </ul>
   </div>
